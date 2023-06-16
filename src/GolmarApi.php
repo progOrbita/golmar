@@ -16,4 +16,10 @@ class GolmarApi
     private $endPoint = 'https://www.golmar.es';
     private $reload = false;
 
+    public function __construct(bool $reload = false)
+    {
+        $this->reload = $reload;
+        $this->cache = new FilesystemAdapter('', 0, dirname(__DIR__) . '/cache');
+    }
+
 }
