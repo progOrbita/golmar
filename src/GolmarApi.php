@@ -32,4 +32,30 @@ class GolmarApi
         return $this->lastError;
     }
 
+    /**
+     * get product url
+     * 
+     * @param string $reference
+     * 
+     * @return string
+     */
+    public function getUrl(string $reference): string
+    {
+        $html = file_get_contents('https://www.golmar.es/resultados-de-la-busqueda?q=' . urlencode($reference));
+
+        $domdoc = new DOMDocument();
+        libxml_use_internal_errors(true);
+        $domdoc->loadHTML($html, LIBXML_NOWARNING);
+
+        $domxpath = new DOMXPath($domdoc);
+        $filtered = $domxpath->query('//span[contains(@class,"product-article-image")]');
+
+        if (count($filtered) != 1) {
+            return '';
+        }
+
+        return $this->endPoint . $filtered[0]->parentNode->getAttribute('href');
+
+    }
+
 }
