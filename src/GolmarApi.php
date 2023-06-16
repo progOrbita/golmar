@@ -22,4 +22,14 @@ class GolmarApi
         $this->cache = new FilesystemAdapter('', 0, dirname(__DIR__) . '/cache');
     }
 
+    /**
+     * Get last error
+     * 
+     * @return string
+     */
+    private function getLastError(): string
+    {
+        return $this->lastError;
+    }
+
 }
