@@ -56,6 +56,34 @@ class GolmarApi
 
         return $this->endPoint . $filtered[0]->parentNode->getAttribute('href');
 
+
+    /**
+     * get product´s html content and save on cache
+     * 
+     * @param string $url
+     * 
+     * @return string
+     */
+    private function getHtml(string $url): string
+    {
+        if ($this->reload) {
+            $this->cache->delete($url);
+        }
+
+        $value = $this->cache->get($url, function (ItemInterface $item, string $url) {
+            $html = file_get_contents($url);
+            if (!$html) {
+                return "";
+            }
+
+            return $html;
+        });
+
+        if (empty($value)) {
+            $this->lastError = "No se puede obtener el contenido de la página";
+        }
+
+        return $value;
     }
 
 }
