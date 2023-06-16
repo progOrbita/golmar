@@ -86,4 +86,19 @@ class GolmarApi
         return $value;
     }
 
+    /**
+     * process csv data
+     * 
+     * @param array $data
+     * 
+     * @return array
+     */
+    private function processCsv(array $data): array
+    {
+        foreach ($data as $product) {
+            $product['html'] = $this->getHtml($product['url']);
+        }
+
+        return $data;
+    }
 }
