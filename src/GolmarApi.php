@@ -10,4 +10,10 @@ use DOMDocument;
 use DOMXPath;
 
 class GolmarApi
+{
+    private $cache;
+    private $lastError = '';
+    private $endPoint = 'https://www.golmar.es';
+    private $reload = false;
+
 }
